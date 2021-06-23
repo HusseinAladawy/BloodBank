@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DB_A34845_bloodsaving" Class="BloodBankDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sql5032.site4now.net;Initial Catalog=DB_A34845_bloodsaving;User ID=DB_A34845_bloodsaving_admin" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BloodBankConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Branch" Member="Branches">
+    <Type Name="Branch">
+      <Column Name="BranchID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BranchName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FavoritePlaces" Member="FavoritePlaces">
+    <Type Name="FavoritePlace">
+      <Column Name="PlaceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FavPlace" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FavoriteTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OLDName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="FavoritePlace_VolunteerPlace" Member="VolunteerPlaces" ThisKey="PlaceID" OtherKey="PlaceID" Type="VolunteerPlace" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FavoriteTypes" Member="FavoriteTypes">
+    <Type Name="FavoriteType">
+      <Column Name="TypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Jobs" Member="Jobs">
+    <Type Name="Job">
+      <Column Name="JobID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="Job_Volunteer" Member="Volunteers" ThisKey="JobID" OtherKey="Job_ID" Type="Volunteer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Territory" Member="Territories">
+    <Type Name="Territory">
+      <Column Name="TerritoryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TerritoryName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="GovernerateID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Territory_Volunteer" Member="Volunteers" ThisKey="TerritoryID" OtherKey="TerritoryID" Type="Volunteer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VolunteerCalls" Member="VolunteerCalls">
+    <Type Name="VolunteerCall">
+      <Column Name="CallID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VolunteerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CallDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Volunteer_VolunteerCall" Member="Volunteer" ThisKey="VolunteerID" OtherKey="V_ID" Type="Volunteer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VolunteerHistory" Member="VolunteerHistories">
+    <Type Name="VolunteerHistory">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Volunteer_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Place_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DonationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Association Name="Volunteer_VolunteerHistory" Member="Volunteer" ThisKey="Volunteer_ID" OtherKey="V_ID" Type="Volunteer" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VolunteerLast" Member="VolunteerLasts">
+    <Type Name="VolunteerLast">
+      <Column Name="LastID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DonationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CallDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VolunteerPlaces" Member="VolunteerPlaces">
+    <Type Name="VolunteerPlace">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VolunteerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PlaceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="FavoritePlace_VolunteerPlace" Member="FavoritePlace" ThisKey="PlaceID" OtherKey="PlaceID" Type="FavoritePlace" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Log]" Member="Logs">
+    <Type Name="Log">
+      <Column Name="LogID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Action" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ActionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActionIN" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Disease" Member="Diseases">
+    <Type Name="Disease">
+      <Column Name="DiseaseID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DiseaseName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Disease_Kid" Member="Kids" ThisKey="DiseaseID" OtherKey="Disease_ID_FK" Type="Kid" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hospital" Member="Hospitals">
+    <Type Name="Hospital">
+      <Column Name="Hospital_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HospitalName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Association Name="Hospital_Kid" Member="Kids" ThisKey="Hospital_ID" OtherKey="Hospital_ID_FK" Type="Kid" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kid_Calls" Member="Kid_Calls">
+    <Type Name="Kid_Call">
+      <Column Name="Kid_Call_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Kid_ID_FK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Column Name="Caller_ID_FK" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="CallDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Kid_Kid_Call" Member="Kid" ThisKey="Kid_ID_FK" OtherKey="Kid_ID" Type="Kid" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kid_Help" Member="Kid_Helps">
+    <Type Name="Kid_Help">
+      <Column Name="HelpID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Kid_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HelpType_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(550)" CanBeNull="true" />
+      <Association Name="Help_Type_Kid_Help" Member="Help_Type" ThisKey="HelpType_ID_FK" OtherKey="HelpTypeID" Type="Help_Type" IsForeignKey="true" />
+      <Association Name="Kid_Kid_Help" Member="Kid" ThisKey="Kid_ID_FK" OtherKey="Kid_ID" Type="Kid" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Help_Type" Member="Help_Types">
+    <Type Name="Help_Type">
+      <Column Name="HelpTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HelpName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Association Name="Help_Type_Kid_Help" Member="Kid_Helps" ThisKey="HelpTypeID" OtherKey="HelpType_ID_FK" Type="Kid_Help" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kid_Transfers" Member="Kid_Transfers">
+    <Type Name="Kid_Transfer">
+      <Column Name="T_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Hospital_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Kid_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TransferDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="V_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Volunteer_Kid_Transfer" Member="Volunteer" ThisKey="V_ID_FK" OtherKey="V_ID" Type="Volunteer" IsForeignKey="true" />
+      <Association Name="Kid_Kid_Transfer" Member="Kid" ThisKey="Kid_ID_FK" OtherKey="Kid_ID" Type="Kid" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Governerates" Member="Governerates">
+    <Type Name="Governerate">
+      <Column Name="GovID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GovernerateName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Volunteer_Kid" Member="Volunteer_Kids">
+    <Type Name="Volunteer_Kid">
+      <Column Name="VK_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="V_ID_FK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="K_ID_FK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Volunteer_Volunteer_Kid" Member="Volunteer" ThisKey="V_ID_FK" OtherKey="V_ID" Type="Volunteer" IsForeignKey="true" />
+      <Association Name="Kid_Volunteer_Kid" Member="Kid" ThisKey="K_ID_FK" OtherKey="Kid_ID" Type="Kid" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HearAboutUs" Member="HearAboutUs">
+    <Type Name="HearAboutUs">
+      <Column Name="HearID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="HearName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Volunteer" Member="Volunteers">
+    <Type Name="Volunteer">
+      <Column Name="V_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDNo" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Mobile1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Mobile2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Email1" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Email2" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="BloodType" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="TerritoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Job_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork1" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork2" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="BirthYear" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="HearedAboutUs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Evaluation" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Platelet" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="NotAvailable" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="AvailabilityDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="LastDonationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="LastCallDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="JobDetails" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="InsertionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="HoldDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="InActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Place_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ready" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CallDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="ActivationDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CallPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DonationPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FavoritePlacePoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ABO" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="RH" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="c_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="C" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="E" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="e_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Kell" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Kafala" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Mobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Mobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Volunteer_VolunteerCall" Member="VolunteerCalls" ThisKey="V_ID" OtherKey="VolunteerID" Type="VolunteerCall" />
+      <Association Name="Volunteer_VolunteerHistory" Member="VolunteerHistories" ThisKey="V_ID" OtherKey="Volunteer_ID" Type="VolunteerHistory" />
+      <Association Name="Volunteer_Kid_Transfer" Member="Kid_Transfers" ThisKey="V_ID" OtherKey="V_ID_FK" Type="Kid_Transfer" />
+      <Association Name="Volunteer_Volunteer_Kid" Member="Volunteer_Kids" ThisKey="V_ID" OtherKey="V_ID_FK" Type="Volunteer_Kid" />
+      <Association Name="Job_Volunteer" Member="Job" ThisKey="Job_ID" OtherKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="Territory_Volunteer" Member="Territory" ThisKey="TerritoryID" OtherKey="TerritoryID" Type="Territory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kid" Member="Kids">
+    <Type Name="Kid">
+      <Column Name="Kid_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="KidName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KidGender" Type="System.String" DbType="NVarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="KidMobile1" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="KidMobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="KidMobile2" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="KidMobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FatherMobile1" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="FatherMobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FatherMobile2" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="FatherMobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MotherMobile1" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MotherMobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="MotherMobile2" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="MotherMobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IDNo" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="BirthDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Disease_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiseaseDetails" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Hospital_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DeactivationReason" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Insurance" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="InsuranceNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ABO" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="RH" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="c_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="C" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="e_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="E" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Kell" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="No_Bloodbags" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastDate_Received_Blood" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NextExpectedBloodNeed" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Territory_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CallPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastCall_Date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="TransferDays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Father_Job_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mother_Job_ID_FK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AdressDetails" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="Kid_Kid_Call" Member="Kid_Calls" ThisKey="Kid_ID" OtherKey="Kid_ID_FK" Type="Kid_Call" />
+      <Association Name="Kid_Kid_Help" Member="Kid_Helps" ThisKey="Kid_ID" OtherKey="Kid_ID_FK" Type="Kid_Help" />
+      <Association Name="Kid_Kid_Transfer" Member="Kid_Transfers" ThisKey="Kid_ID" OtherKey="Kid_ID_FK" Type="Kid_Transfer" />
+      <Association Name="Kid_Volunteer_Kid" Member="Volunteer_Kids" ThisKey="Kid_ID" OtherKey="K_ID_FK" Type="Volunteer_Kid" />
+      <Association Name="Disease_Kid" Member="Disease" ThisKey="Disease_ID_FK" OtherKey="DiseaseID" Type="Disease" IsForeignKey="true" />
+      <Association Name="Hospital_Kid" Member="Hospital" ThisKey="Hospital_ID_FK" OtherKey="Hospital_ID" Type="Hospital" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DonationPlaceType" Member="DonationPlaceTypes">
+    <Type Name="DonationPlaceType">
+      <Column Name="DonationPlaceTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DonationPlaceTypeName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="DonationPlaceType_DonationPlace" Member="DonationPlaces" ThisKey="DonationPlaceTypeID" OtherKey="DonationPlaceTypeID_FK" Type="DonationPlace" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DonationPlaces" Member="DonationPlaces">
+    <Type Name="DonationPlace">
+      <Column Name="DonationPlaceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DonationPlaceName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="DonationPlaceTypeID_FK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OLDName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="DonationPlaceType_DonationPlace" Member="DonationPlaceType" ThisKey="DonationPlaceTypeID_FK" OtherKey="DonationPlaceTypeID" Type="DonationPlaceType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ArchivingReason" Member="ArchivingReasons">
+    <Type Name="ArchivingReason">
+      <Column Name="ReasonID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReasonName" Type="System.String" DbType="NVarChar(550) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Users" Member="aspnet_Users">
+    <Type Name="aspnet_User">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileAlias" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="IsAnonymous" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Membership" Member="aspnet_Memberships">
+    <Type Name="aspnet_Membership">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordFormat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePIN" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="LoweredEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordQuestion" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordAnswer" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLockedOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastPasswordChangedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLockoutDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.LogInsert" Method="LogInsert">
+    <Parameter Name="Action" Parameter="action" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="ActionDate" Parameter="actionDate" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="ActionIN" Parameter="actionIN" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="VID" Parameter="vID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.LogSearch" Method="LogSearch">
+    <Parameter Name="Action" Parameter="action" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="UserID" Parameter="userID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ActionIN" Parameter="actionIN" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="VID" Parameter="vID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="LogSearchResult">
+      <Column Name="Action" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ActionIN" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ActionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LogID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.EmergencySearch" Method="EmergencySearch">
+    <Parameter Name="BloodType" Parameter="bloodType" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="TerritoryID" Parameter="territoryID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FavPlaceID" Parameter="favPlaceID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="MobileNetwork" Parameter="mobileNetwork" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="Evaluation" Parameter="evaluation" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="Platelet" Parameter="platelet" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="FavoriteTypeID" Parameter="favoriteTypeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CallPoints" Parameter="callPoints" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DonationPoints" Parameter="donationPoints" Type="System.Int32" DbType="Int" />
+    <ElementType Name="EmergencySearchResult">
+      <Column Name="V_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="V_ID1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Mobile1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Mobile2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="BloodType" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork1" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork2" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CallPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DonationPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CallPoints1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TerritoryName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DT" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="St" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Cm" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CD" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Volunteer_Kid_Insert" Method="Volunteer_Kid_Insert">
+    <Parameter Name="V_ID_FK" Parameter="v_ID_FK" Type="System.Int32" DbType="Int" />
+    <Parameter Name="K_ID_FK" Parameter="k_ID_FK" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Deleted_Volunteer" Method="Deleted_Volunteer">
+    <Parameter Name="UserID" Parameter="userID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="Mobile" Parameter="mobile" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="VID" Parameter="vID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="Deleted_VolunteerResult">
+      <Column Name="V_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Mobile1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Mobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Mobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Mobile2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ABO" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="RH" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ActionDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActionIN" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Action" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="VID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Kid_Search" Method="Kid_Search">
+    <Parameter Name="IDNo" Parameter="iDNo" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="TerritoryID" Parameter="territoryID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="K_ID" Parameter="k_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Status" Parameter="status" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="HospitalID" Parameter="hospitalID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DiseaseID" Parameter="diseaseID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ABO" Parameter="aBO" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="RH" Parameter="rH" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="c_" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="C" Parameter="c" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="e_" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="E" Parameter="e" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="Kell" Parameter="kell" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="Date" />
+    <ElementType Name="Kid_SearchResult">
+      <Column Name="Kid_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="KidName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="KidGender" Type="System.String" DbType="NVarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="ABO" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="RH" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="C" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="c_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="E" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="e_" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Kell" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="LastDate_Received_Blood" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NextExpectedBloodNeed" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="IDNo" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="BirthDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CallPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HospitalName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="DiseaseName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="CD" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SearchVolunteer" Method="SearchVolunteer">
+    <Parameter Name="RowNum" Parameter="rowNum" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDNo" Parameter="iDNo" Type="System.String" DbType="NVarChar(15)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Phone" Parameter="phone" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="Mobile" Parameter="mobile" Type="System.String" DbType="NVarChar(20)" />
+    <Parameter Name="WhatsApp" Parameter="whatsApp" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(500)" />
+    <Parameter Name="TerritoryID" Parameter="territoryID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Job" Parameter="job" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="Gender" Parameter="gender" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="MobileNetwork" Parameter="mobileNetwork" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="BirthYear" Parameter="birthYear" Type="System.String" DbType="NVarChar(5)" />
+    <Parameter Name="Evaluation" Parameter="evaluation" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="Platelet" Parameter="platelet" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="NotAvailable" Parameter="notAvailable" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="FavPlaceID" Parameter="favPlaceID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="hold" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="Inactive" Parameter="inactive" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="V_ID" Parameter="v_ID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="FavoriteTypeID" Parameter="favoriteTypeID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CallPoints" Parameter="callPoints" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DonationPoints" Parameter="donationPoints" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ABO" Parameter="aBO" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="RH" Parameter="rH" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="c_" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="C" Parameter="c" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="e_" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="E" Parameter="e" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="Kell" Parameter="kell" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="Kafala" Parameter="kafala" Type="System.String" DbType="NVarChar(2)" />
+    <Parameter Name="Ready" Parameter="ready" Type="System.String" DbType="NVarChar(1)" />
+    <Parameter Name="ActiveData" Parameter="activeData" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="InActiveData" Parameter="inActiveData" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Heared" Parameter="heared" Type="System.Int32" DbType="Int" />
+    <Parameter Name="GovID" Parameter="govID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SearchVolunteerResult">
+      <Column Name="V_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="V_ID1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Mobile1" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Mobile2" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="BloodType" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork1" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="MobileNetwork2" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DonationPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CallPoints" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TerritoryName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DT" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="St" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Cm" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Comments" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ABO" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="RH" Type="System.String" DbType="NVarChar(1)" CanBeNull="true" />
+      <Column Name="Mobile1_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Mobile2_W" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CD" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
